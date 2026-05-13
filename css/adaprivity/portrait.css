@@ -60,17 +60,22 @@
         display: grid;
         grid-template-columns: repeat(4, 1fr); /* 4 колонки */
         grid-auto-rows: 1fr; /* все кнопки одинаковые */
-        gap: 0.5rem;
-        padding: 2rem 1rem 2rem 1rem;
+        gap: 0;
+        padding: 2rem 1rem 0 1rem;
     }
 
     .down {
-        min-height: 2rem;
-        height: 5vh;
-        height: 3rem;
-        max-height: 4rem;
-        padding: 0 0 2vh 0;
         flex: 1;
+        min-height: 3rem;
+        max-height: 3rem;
+        padding: 1rem 0;
+
+        background-color: #1a1a1a;
+    }
+
+    .pageplace {
+        max-height: calc(100% - 5rem);
+        height: calc(100% - 5rem);
     }
 
     .bdown {
@@ -93,8 +98,8 @@
     }
 
     .circle {
-        width: 7.5vw;
-        height: 7.5vw;
+        width: 7dvw;
+        height: 7dvw;
     }
 
     html, body {

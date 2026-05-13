@@ -7,11 +7,17 @@
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="fonts/!fonts.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/keyboard.css" />
     <link rel="stylesheet" href="css/calc.css" />
     <link rel="stylesheet" href="css/theme/dark.css" />
-    <link rel="stylesheet" href="css/calc-portrait.css" />
     <link rel="stylesheet" href="css/conv.css" />
     <link rel="stylesheet" href="css/about.css" />
+
+    <!-- ADAPTATIONS -->
+    <link rel="stylesheet" href="css/adaprivity/portrait.css" />
+    <link rel="stylesheet" href="css/adaprivity/desktop.css" />
+    <link rel="stylesheet" href="css/adaprivity/square.css" />
+    <link rel="stylesheet" href="css/adaprivity/wide.css" />
 
     <!-- NERDAMER -->
         <script src="js/lib/nerdamer/nerdamer.core.js"></script>
@@ -263,23 +269,7 @@
                     </div>
                     <button class="place" style="width: 100%;background-color: #2a2a2a;border: 0;height: 40px;border-radius: 8px;color: white;border: 1px;border-color: #aaaaaa;border: solid;border-width: 1px; display: flex; justify-content: center;" onclick="convPlaceNew()">+</button>
                     <div class="convdown">
-                        <div class="cdElement  buttonsplace min dec" id="buttonsplaceConv" style="width: 100%; padding: 0; grid-template-columns: repeat(3, 1fr);">
-                            <button class="btn bcalc func" data-val="clear" onclick="window.ConvManager.interactClin('clear', '')">AC</button>
-                            <button class="btn bcalc func" data-val="backsp" onclick="window.ConvManager.interactClin('delBack', 1)">←</button>
-                            <button class="btn bcalc oper" data-val="+or-" onclick="window.ConvManager.interactClin('add', '-')">+/-</button>
-                            <button class="btn bcalc numb" data-val="7" onclick="window.ConvManager.interactClin('add', '7')">7</button>
-                            <button class="btn bcalc numb" data-val="8" onclick="window.ConvManager.interactClin('add', '8')">8</button>
-                            <button class="btn bcalc numb" data-val="9" onclick="window.ConvManager.interactClin('add', '9')">9</button>
-                            <button class="btn bcalc numb" data-val="4" onclick="window.ConvManager.interactClin('add', '4')">4</button>
-                            <button class="btn bcalc numb" data-val="5" onclick="window.ConvManager.interactClin('add', '5')">5</button>
-                            <button class="btn bcalc numb" data-val="6" onclick="window.ConvManager.interactClin('add', '6')">6</button>
-                            <button class="btn bcalc numb" data-val="1" onclick="window.ConvManager.interactClin('add', '1')">1</button>
-                            <button class="btn bcalc numb" data-val="2" onclick="window.ConvManager.interactClin('add', '2')">2</button>
-                            <button class="btn bcalc numb" data-val="3" onclick="window.ConvManager.interactClin('add', '3')">3</button>
-                            <button class="btn bcalc func" data-val="result" onclick="window.ConvManager.interactClin('result', 'click')"></button>
-                            <button class="btn bcalc numb" data-val="0" onclick="window.ConvManager.interactClin('add', '0')">0</button>
-                            <button class="btn bcalc numb" data-val="." onclick="window.ConvManager.interactClin('add', '.')">.</button>
-                        </div>
+                        <div class="cdElement  buttonsplace min dec" id="buttonsplaceConv" style="width: 100%; padding: 0; grid-template-columns: repeat(3, 1fr);"></div>
                         <div class="cdElement active convVars" id="convVars" style="flex: 1">
                             <table class="convVarsTable">
                                 <thead></thead>
