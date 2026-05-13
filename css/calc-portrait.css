@@ -1,0 +1,121 @@
+@media (orientation: portrait) {
+
+    .upper {
+        width: 100%;           /* на телефоне занимает всю ширину */
+        height: max-content;
+        min-height: 10rem;     /* минимальная высота для удобного ввода */
+        padding: 1rem;         /* внутренние отступы в rem, масштабируемые */
+        box-sizing: border-box; /* чтобы паддинги не ломали ширину */
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        height: 35vh;
+    }
+
+    .systemplace {
+        height: 2rem;
+        min-height: 5vh;
+    }
+
+    .inputplace {
+        min-height: 5rem;
+        height: 100%;
+    }
+
+    .inputup {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        flex: 0 0 auto; /* высота зависит от содержимого */
+        padding: 1rem;
+        background: #222;
+        color: #fff;
+        font-size: 1.2em;
+        word-wrap: break-word;
+    }
+
+    .inputdown {
+        bottom: -25px;
+    }
+
+    .inputcalc {
+        height: 100%;
+        width: 75%
+    }
+
+    .resbox {
+        height: 100%;
+        width: 25%;
+    }
+
+    .container {
+        scale: 1;
+        margin: 0;
+        padding: 0;
+    }
+
+    .buttonsplace {
+        height: calc(100% - 26rem);
+        flex: 1; /* оставшееся место */
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 колонки */
+        grid-auto-rows: 1fr; /* все кнопки одинаковые */
+        gap: 0.5rem;
+        padding: 2rem 1rem 2rem 1rem;
+    }
+
+    .down {
+        min-height: 2rem;
+        height: 5vh;
+        height: 3rem;
+        max-height: 4rem;
+        padding: 0 0 2vh 0;
+        flex: 1;
+    }
+
+    .bdown {
+        height: 100%;
+        font-size: 150%;
+        border-radius: 99999px;
+    }
+
+    .bsys {
+        font-size: 150%;
+    }
+
+    /*.pageplace {
+        flex: 1;
+    }*/
+
+    .pcalc.active {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .circle {
+        width: 7.5vw;
+        height: 7.5vw;
+    }
+
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: sans-serif;
+
+        /* чтобы всё масштабировалось */
+        font-size: clamp(14px, 2vw, 18px);
+    }
+
+    #result {
+        font-size: 5vw;
+    }
+
+    .btn.bdown {
+        border-radius: 99999px;
+    }
+
+    .btn.bsys {
+        border-radius: 99999px;
+    }
+}

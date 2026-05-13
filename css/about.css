@@ -1,0 +1,23 @@
+.abtcont {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#abtdown {
+    padding: 5vw;
+    display: flex;
+    flex-direction: column;
+    gap: 2vw;
+}
+
+.abtbtn {
+    width: 100%;
+    height: 10vw;
+    background-color: #2a2a2a;
+    color: white;
+    border: none;
+    border-radius: 8px;
+}

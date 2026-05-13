@@ -1,0 +1,5 @@
+@font-face {
+    font-family: 'ConsolasF';
+    src: local('Consolas'), local('Courier New'),
+         url('fonts/consolas.ttf') format('truetype');
+}

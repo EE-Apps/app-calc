@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Calc EE</title>
+    <!--link rel="icon" href="img/ico.svg" type="image/svg+xml" /-->
+    <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="fonts/!fonts.css" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/calc.css" />
+    <link rel="stylesheet" href="css/theme/dark.css" />
+    <link rel="stylesheet" href="css/calc-portrait.css" />
+    <link rel="stylesheet" href="css/conv.css" />
+    <link rel="stylesheet" href="css/about.css" />
+
+    <!-- NERDAMER -->
+        <script src="js/lib/nerdamer/nerdamer.core.js"></script>
+        <script src="js/lib/nerdamer/Calculus.js"></script>
+        <script src="js/lib/nerdamer/Algebra.js"></script>
+        <script src="js/lib/nerdamer/Solve.js"></script>
+        <!--script src="js/lib/nerdamer"></script-->
+    <!-- NERDAMER -->
+
+    <script src="js/lib/jquery-3.7.1.min.js"></script>
+    <script src="js/lib/math.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/calc.js"></script>
+    <script src="js/pages.js"></script>
+    <script src="js/modules/calculator.js"></script>
+    <script src="js/converters.js"></script>
+    <script src="js/convData.js"></script>
+    <script src="js/conv.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="head">
+
+        </div>
+        <div class="pageplace">
+            <div class="page pcalc active" id="pcalc">
+                <div class="upper">
+                <div class="systemplace">
+                    <button class="btn bsys" id="sys2" onclick="window.CalcManager.sysSwitch(2)">BIN</button>
+                    <button class="btn bsys" id="sys8" onclick="window.CalcManager.sysSwitch(8)">OCT</button>
+                    <button class="btn bsys active" id="sys10" onclick="window.CalcManager.sysSwitch(10)">DEC</button>
+                    <button class="btn bsys" id="sys16" onclick="window.CalcManager.sysSwitch(16)">HEX</button>
+                    <button class="btn bsys" id="sysCUSTOM" onclick="window.CalcManager.sysSwitch(prompt())">—</button></button>
+                </div>
+                <div class="inputplace">
+                    <div class="inputup">
+                        <textarea type="text" class="inputcalc" id="clin" placeholder="..." ></textarea>
+                        <div class="resbox">
+                            <pre id="result">ENOT</pre>
+                        </div>
+                    </div>
+                    <div class="inputdown">
+                        <div class="circle">
+                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Копировать" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="10" height="12" rx="2"/>
+                                <rect x="5" y="3" width="10" height="12" rx="2"/>
+                            </svg>
+                        </div>
+                        <div class="circle">
+                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Копировать с результатом" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="9" y="9" width="10" height="12" rx="2"/>
+                                <rect x="5" y="3" width="10" height="12" rx="2"/>
+                                <line x1="14" y1="13" x2="18" y2="13"/>
+                                <line x1="14" y1="16" x2="18" y2="16"/>
+                            </svg>
+                        </div>
+                        <div class="circle">
+                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Вставить" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 4h6"/>
+                                <path d="M8 7h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/>
+                                <path d="M12 11v6"/>
+                                <path d="M9 14h6"/>
+                            </svg>
+                        </div>
+                        <div class="circle">
+                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Вставить (заменив всё)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 4h6"/>
+                                <rect x="6" y="7" width="12" height="12" rx="2"/>
+                                <path d="M12 10v5"/>
+                                <path d="M9.5 12.5h5"/>
+                                <path d="M16.5 8.5h1.5v1.5"/>
+                                <path d="M18 10a4 4 0 1 1-2-3.46"/>
+                            </svg>
+                        </div>
+                        <!--div class="circle">
+                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Клавиатура" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="6" width="18" height="12" rx="2"/>
+                                <path d="M6 10h1 M9 10h1 M12 10h1 M15 10h1 M18 10h1"/>
+                                <path d="M6 13h1 M9 13h1 M12 13h1 M15 13h1 M18 13h1"/>
+                                <path d="M6 16h10"/>
+                            </svg>
+                        </div-->
+                    </div>
+                    <!--div class="inputright">
+                        <pre id="result">ENOT</pre>
+                    </div-->
+                </div>
+                </div>
+                <div class="buttonsplace min dec" id="buttonsplace">
+                    <button class="btn bcalc func" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
+                    <button class="btn bcalc oper" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">/</button>
+                    <button class="btn bcalc numb" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
+                    <button class="btn bcalc numb" data-val="8" onclick="window.CalcManager.interactClin('add', '8')">8</button>
+                    <button class="btn bcalc numb" data-val="9" onclick="window.CalcManager.interactClin('add', '9')">9</button>
+                    <button class="btn bcalc oper" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">*</button>
+                    <button class="btn bcalc numb" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc numb" data-val="1" onclick="window.CalcManager.interactClin('add', '1')">1</button>
+                    <button class="btn bcalc numb" data-val="2" onclick="window.CalcManager.interactClin('add', '2')">2</button>
+                    <button class="btn bcalc numb" data-val="3" onclick="window.CalcManager.interactClin('add', '3')">3</button>
+                    <button class="btn bcalc oper" data-val="+" onclick="window.CalcManager.interactClin('add', '+')">+</button>
+                    <button class="btn bcalc gray" data-val="more" onclick="window.CalcManager.sheetSet(10, 'mid')">«</button>
+                    <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
+                    <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
+                    <button class="btn bcalc func" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>
+                </div>
+            </div>
+            <div class="page pconvs" id="pconvs">
+                <div class="fantikconv">
+                    <div class="convcat" id="converters">
+                        <h2 class="convtitle" onclick="convertorsShowHide('converter')">Конвертеры</h2>
+                        <div class="convgrid converters active" id="convertersGrid">
+                            <div class="converter" onclick="window.PagesManager.pageSwitch('conv')">
+                                <img src="img/convs/длина.svg" />
+                                <p class="convnamelist">Длина</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/площадь.svg" />
+                                <p class="convnamelist">Площадь</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/объём.svg" />
+                                <p class="convnamelist">Объём</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/вес.svg" />
+                                <p class="convnamelist">Вес</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/энергия.svg" />
+                                <p class="convnamelist">Энергия</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/скорость.svg" />
+                                <p class="convnamelist">Скорость</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/мощность.svg" />
+                                <p class="convnamelist">Мощность</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/давление.svg" />
+                                <p class="convnamelist">Давление</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/углы.svg" />
+                                <p class="convnamelist">Углы</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/данные.svg" />
+                                <p class="convnamelist">Данные</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/время.svg" />
+                                <p class="convnamelist">Время</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/крутящий_момент.svg" />
+                                <p class="convnamelist">Крутящий момент</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/объёмный_поток.svg" />
+                                <p class="convnamelist">Объёмный поток</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/расход_топлива.svg" />
+                                <p class="convnamelist">Расход топлива</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/ускорение.svg" />
+                                <p class="convnamelist">Ускорение</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/хранимая_энергия.svg" />
+                                <p class="convnamelist">Хранимая энергия</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/температура.svg" />
+                                <p class="convnamelist">Температура</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/размер_обуви.svg" />
+                                <p class="convnamelist">Размер обуви</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/валюты.svg" />
+                                <p class="convnamelist">Валюты</p>
+                            </div>
+                            <div class="converter">
+                                <img src="img/convs/система_счисления.svg" />
+                                <p class="convnamelist">Система счисления</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="convcat" id="formuls">
+                        <h2 class="convtitle" onclick="convertorsShowHide('formul')">Формулы</h2>
+                        <div class="convgrid formuls" id="formulsGrid">
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                        </div>
+                    </div>
+                    <div class="convcat" id="userforms">
+                        <h2 class="convtitle" onclick="convertorsShowHide('user')">Пользовательское</h2>
+                        <div class="convgrid user" id="usersGrid">
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                            <div class="converter"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="page pabt" id="pabt">
+                <div class="abtcont">
+                    <div id="abtup">
+                        <h1 style="width: 100%; text-align: center">Calc EE</h1>
+                        <p style="text-indent: 2em; padding: 5vw; text-align: justify;">Calc EE - лучший калькулятор в мире. тут короче его описание</p>
+                    </div>
+                    <div id="abtdown">
+                        <button class="abtbtn">Настройки</button>
+                        <button class="abtbtn">О Авторе</button>
+                        <a class="abtbtn" style="display: block; text-align: center; align-content: center;" href="https://discord.gg/ff8TPHH5VS">Discord</a>
+                    </div>
+                </div>
+            </div>
+            <div class="page pconv active" id="pconv">
+                <div class="fantikconv" style="overflow-y: hidden;">
+                    <h1 style="margin: 0;">Длина</h1>
+                    <div id="convplaces" class="places" style="width: calc(100% - 10px);display: flex;flex-direction: column;flex-wrap: nowrap;gap: 1vh;height: 35vh;overflow-y: scroll;padding: 0 10px 0 0;/* flex: 2; */">
+
+                    </div>
+                    <button class="place" style="width: 100%;background-color: #2a2a2a;border: 0;height: 40px;border-radius: 8px;color: white;border: 1px;border-color: #aaaaaa;border: solid;border-width: 1px; display: flex; justify-content: center;" onclick="convPlaceNew()">+</button>
+                    <div class="convdown">
+                        <div class="cdElement  buttonsplace min dec" id="buttonsplaceConv" style="width: 100%; padding: 0; grid-template-columns: repeat(3, 1fr);">
+                            <button class="btn bcalc func" data-val="clear" onclick="window.ConvManager.interactClin('clear', '')">AC</button>
+                            <button class="btn bcalc func" data-val="backsp" onclick="window.ConvManager.interactClin('delBack', 1)">←</button>
+                            <button class="btn bcalc oper" data-val="+or-" onclick="window.ConvManager.interactClin('add', '-')">+/-</button>
+                            <button class="btn bcalc numb" data-val="7" onclick="window.ConvManager.interactClin('add', '7')">7</button>
+                            <button class="btn bcalc numb" data-val="8" onclick="window.ConvManager.interactClin('add', '8')">8</button>
+                            <button class="btn bcalc numb" data-val="9" onclick="window.ConvManager.interactClin('add', '9')">9</button>
+                            <button class="btn bcalc numb" data-val="4" onclick="window.ConvManager.interactClin('add', '4')">4</button>
+                            <button class="btn bcalc numb" data-val="5" onclick="window.ConvManager.interactClin('add', '5')">5</button>
+                            <button class="btn bcalc numb" data-val="6" onclick="window.ConvManager.interactClin('add', '6')">6</button>
+                            <button class="btn bcalc numb" data-val="1" onclick="window.ConvManager.interactClin('add', '1')">1</button>
+                            <button class="btn bcalc numb" data-val="2" onclick="window.ConvManager.interactClin('add', '2')">2</button>
+                            <button class="btn bcalc numb" data-val="3" onclick="window.ConvManager.interactClin('add', '3')">3</button>
+                            <button class="btn bcalc func" data-val="result" onclick="window.ConvManager.interactClin('result', 'click')"></button>
+                            <button class="btn bcalc numb" data-val="0" onclick="window.ConvManager.interactClin('add', '0')">0</button>
+                            <button class="btn bcalc numb" data-val="." onclick="window.ConvManager.interactClin('add', '.')">.</button>
+                        </div>
+                        <div class="cdElement active convVars" id="convVars" style="flex: 1">
+                            <table class="convVarsTable">
+                                <thead></thead>
+                                <tbody class="convChoseValues" style="background-color: #2d2d2d; border-radius: 8px;">
+                                    <tr onclick="convSetThis('пм')"><td>пиктометр</td><td>пм</td><td>0.000 000 000 001</td></tr>
+                                    <tr onclick="convSetThis('нм')"><td>нанометр</td><td>нм</td><td>0.000 000 001</td></tr>
+                                    <tr onclick="convSetThis('мкм')"><td>микрометр</td><td>мкм</td><td>0.000 001</td></tr>
+                                    <tr onclick="convSetThis('мм')"><td>милиметр</td><td>мм</td><td>0.001</td></tr>
+                                    <tr onclick="convSetThis('см')"><td>сантиметр</td><td>см</td><td>0.01</td></tr>
+                                    <tr onclick="convSetThis('дм')"><td>дециметр</td><td>дм</td><td>0.1</td></tr>
+                                    <tr onclick="convSetThis('м')"><td>метр</td><td>м</td><td>1</td></tr>
+                                    <tr onclick="convSetThis('км')"><td>киллометр</td><td>км</td><td>1 000</td></tr>
+                                    <tr><td>дюйм</td><td>in</td><td>0.025 4</td></tr>
+                                    <tr><td>фут</td><td>ft</td><td>0.304 8</td></tr>
+                                    <tr><td>ярд</td><td>yd</td><td>0.914 4</td></tr>
+                                    <tr><td>миля</td><td>mi</td><td>1 609.34</td></tr>
+                                    <tr><td>морская миля</td><td>nmi</td><td>1 852</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="down">
+            <button onclick="window.PagesManager.pageSwitch('calc')" class="btn bdown active" id="calc-btn">Calc</button>
+            <button onclick="window.PagesManager.pageSwitch('convs')" class="btn bdown" id="convs-btn">Converter</button>
+            <button onclick="window.PagesManager.pageSwitch('abt')" class="btn bdown" id="abt-btn">About</button>
+        </div>
+    </div>
+</body>
+</html>

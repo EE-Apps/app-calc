@@ -1,0 +1,132 @@
+.convtitle {
+    text-align: center;
+    cursor: pointer;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.convcat {
+    width: 100%;
+    border-radius: 8px;
+    background-color: #222222;
+}
+
+.page.pconv.active {
+    height: calc(100% - 20px);
+}
+
+.fantikconv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 0 0 0;
+    overflow-y: scroll;
+    height: 95%;
+    padding: 5%;
+}
+
+.convgrid {
+    display: none
+}
+
+.convgrid.active {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    justify-items: center;
+    column-gap: 1vw;
+    row-gap: 3vw;
+    padding: 2vw;
+    padding-bottom: 3vw;
+}
+
+.converter {
+    width: 25vw;
+    height: 25vw;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.convnamelist {
+    padding: 0;
+    bottom: 0;
+    margin: 0;
+    padding-bottom: 2vw;
+}
+
+.convnamelist {
+    text-align: center;
+}
+
+img {
+    flex: 1;
+    width: 15vw;
+    height: 15vw;
+    border: 0;
+}
+
+.cdElement {
+    display: none;
+}
+
+.cdElement.active {
+    display: block;
+}
+
+.cdElement.active.buttonsplace {
+    display: grid;
+    height: 100%;
+}
+
+.cdElement.active.convVars {
+    display: flex;
+}
+
+.convdown {
+    width: 100%;
+    height: 100%;
+}
+
+.cdElement {
+}
+
+.convVarsTable {
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.convVars {
+    height: calc(100vh - 4rem - 2vh - 40px - 35vh - 32px);
+    overflow-y: scroll;
+    padding: 0 10px 0 0;
+}
+
+.place {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between; 
+    width: 100%;
+    cursor: pointer;
+}
+
+.place button {
+    border: 0;
+    width: 25%;
+    border-radius: 8px 0 0 8px;
+    cursor: pointer;
+}
+
+.place.active button {
+    cursor: default;
+}
+
+.convChoseValues {
+    cursor: pointer;
+}

@@ -1,0 +1,29 @@
+.tab-nav {
+    padding: 0.8rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-nav:hover {
+    background: var(--bg-hover);
+    transform: translateY(-2px);
+}
+
+.tab-nav.active {
+    background: var(--button-pp);
+    color: var(--accent-yellow);
+}
+
+.header {
+    background-color: var(--bg-secondary);
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}

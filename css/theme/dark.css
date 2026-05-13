@@ -1,0 +1,95 @@
+body {
+    background-color: #101010;
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    background-color: #1a1a1a;
+}
+
+.btn.bdown {
+    background-color: #33333355;
+    color: #ffffff;
+}
+
+.btn.bdown:hover {
+    background-color: #44444455;
+}
+
+.btn.bdown.active {
+    background-color: #ffd22f20;
+}
+
+.btn.bsys {
+    background-color: #33333355;
+    color: #ffffff;
+}
+
+.btn.bsys:hover {
+    background-color: #44444455;
+}
+
+.btn.bsys.active {
+    background-color: #ffd22f20;
+}
+
+input {
+    background-color: #262626;
+    color: #ffffff;
+    border: 1px solid #cccccc6c;
+}
+
+textarea {
+    background-color: #262626;
+    color: #ffffff;
+    border: none;
+}
+
+.btn.bcalc {
+    background-color: #262626;
+    color: #ffffff;
+}
+
+.btn.bcalc:hover {
+    background-color: #333333;
+}
+
+.btn.bcalc.func {
+    color: #00a3ff;
+}
+
+.btn.bcalc.oper {
+    color: #00ff94;
+}
+
+.btn.bcalc.opeb {
+    color: #00ff94;
+}
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff33 #242424;
+}
+
+.circle {
+    background-color: #24242450;
+}
+
+.inputup {
+    background-color: #242424;
+}
+
+.btn.bsys {
+    background-color: #262626;
+    color: #ffffff
+}
+
+.place button {
+    background-color: #2a2a2a;
+    color: white;
+}
+
+.place.active button, .place.active input {
+    background-color: #4a4a4a;
+}
