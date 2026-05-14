@@ -5,6 +5,7 @@
     <title>Calc EE</title>
     <!--link rel="icon" href="img/ico.svg" type="image/svg+xml" /-->
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="css/theme/!.css" />
     <link rel="stylesheet" href="fonts/!fonts.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/keyboard.css" />
@@ -33,8 +34,8 @@
     <script src="js/calc.js"></script>
     <script src="js/pages.js"></script>
     <script src="js/modules/calculator.js"></script>
-    <script src="js/converters.js"></script>
     <script src="js/convData.js"></script>
+    <script src="js/converters.js"></script>
     <script src="js/conv.js"></script>
 </head>
 <body>
@@ -264,16 +265,16 @@
             <div class="page pconv active" id="pconv">
                 <div class="fantikconv" style="overflow-y: hidden;">
                     <h1 style="margin: 0;">Длина</h1>
-                    <div id="convplaces" class="places" style="width: calc(100% - 10px);display: flex;flex-direction: column;flex-wrap: nowrap;gap: 1vh;height: 35vh;overflow-y: scroll;padding: 0 10px 0 0;/* flex: 2; */">
+                    <div id="convplaces" class="places">
 
                     </div>
-                    <button class="place" style="width: 100%;background-color: #2a2a2a;border: 0;height: 40px;border-radius: 8px;color: white;border: 1px;border-color: #aaaaaa;border: solid;border-width: 1px; display: flex; justify-content: center;" onclick="convPlaceNew()">+</button>
+                    <button id="addPlace" class="place" onclick="convPlaceNew()">+</button>
                     <div class="convdown">
                         <div class="cdElement  buttonsplace min dec" id="buttonsplaceConv" style="width: 100%; padding: 0; grid-template-columns: repeat(3, 1fr);"></div>
                         <div class="cdElement active convVars" id="convVars" style="flex: 1">
                             <table class="convVarsTable">
                                 <thead></thead>
-                                <tbody class="convChoseValues" style="background-color: #2d2d2d; border-radius: 8px;">
+                                <tbody id="convChoseValues">
                                     <tr onclick="convSetThis('пм')"><td>пиктометр</td><td>пм</td><td>0.000 000 000 001</td></tr>
                                     <tr onclick="convSetThis('нм')"><td>нанометр</td><td>нм</td><td>0.000 000 001</td></tr>
                                     <tr onclick="convSetThis('мкм')"><td>микрометр</td><td>мкм</td><td>0.000 001</td></tr>
@@ -295,7 +296,7 @@
             </div>
         </div>
         <div class="down">
-            <button onclick="window.PagesManager.pageSwitch('calc')" class="btn bdown active" id="calc-btn">Calc</button>
+            <button onclick="window.PagesManager.pageSwitch('calc')" class="btn bdown active" id="calc-btn">Calculator</button>
             <button onclick="window.PagesManager.pageSwitch('convs')" class="btn bdown" id="convs-btn">Converter</button>
             <button onclick="window.PagesManager.pageSwitch('abt')" class="btn bdown" id="abt-btn">About</button>
         </div>

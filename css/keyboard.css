@@ -3,59 +3,43 @@
 .buttonsplace {
     display: grid;
     gap: 5px;
+    gap: 0;
     height: calc(100% - 108px - 28px - 10px);
     padding: 5px;
+}
+
+/* OCT */
+.buttonsplace.oct.min {
+    grid-template-columns: repeat(4, 1fr);
+}
+.buttonsplace.oct.mid {
+    grid-template-columns: repeat(5, 1fr);
+}
+.buttonsplace.oct.max {
+    grid-template-columns: repeat(6, 1fr);
 }
 
 /* DEC */
 .buttonsplace.dec.min {
     grid-template-columns: repeat(4, 1fr);
 }
-
-/*.buttonsplace.dec.min .btn.bcalc {
-    font-size: 4rem;
-}*/
-
 .buttonsplace.dec.mid {
     grid-template-columns: repeat(5, 1fr);
 }
-
-/*.buttonsplace.dec.mid .btn.bcalc {
-    font-size: 4rem;
-}*/
-
 .buttonsplace.dec.max {
     grid-template-columns: repeat(6, 1fr);
 }
-
-/*.buttonsplace.dec.max .btn.bcalc {
-    font-size: 3rem;
-}*/
 
 /* HEX */
 .buttonsplace.hex.min {
     grid-template-columns: repeat(5, 1fr);
 }
-
-/*.buttonsplace.hex.min .btn.bcalc {
-    font-size: 4rem;
-}*/
-
 .buttonsplace.hex.mid {
     grid-template-columns: repeat(5, 1fr);
 }
-
-/*.buttonsplace.hex.mid .btn.bcalc {
-    font-size: 3.5rem;
-}*/
-
 .buttonsplace.hex.max {
     grid-template-columns: repeat(6, 1fr);
 }
-
-/*.buttonsplace.hex.max .btn.bcalc {
-    font-size: 3rem;
-}*/
 
 .btn.bcalc {
     border-radius: 2rem;

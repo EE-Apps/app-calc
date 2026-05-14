@@ -1,0 +1,13 @@
+@media (orientation: landscape) {
+    .down {
+        flex: 1;
+        min-height: 3rem;
+        max-height: 3rem;
+        padding: var(--ds) 0;
+        background-color: #1a1a1a;
+    }
+
+    .btn.bsys {
+        font-size: 3dvh;
+    }
+}

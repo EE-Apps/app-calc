@@ -61,14 +61,14 @@
         grid-template-columns: repeat(4, 1fr); /* 4 колонки */
         grid-auto-rows: 1fr; /* все кнопки одинаковые */
         gap: 0;
-        padding: 2rem 1rem 0 1rem;
+        padding: var(--ds2) var(--ds) 0 var(--ds);
     }
 
     .down {
         flex: 1;
         min-height: 3rem;
         max-height: 3rem;
-        padding: 1rem 0;
+        padding: var(--ds) 0;
 
         background-color: #1a1a1a;
     }
@@ -81,7 +81,7 @@
     .bdown {
         height: 100%;
         font-size: 150%;
-        border-radius: 99999px;
+        border-radius: var(--brr);
     }
 
     .bsys {
@@ -114,13 +114,5 @@
 
     #result {
         font-size: 5vw;
-    }
-
-    .btn.bdown {
-        border-radius: 99999px;
-    }
-
-    .btn.bsys {
-        border-radius: 99999px;
     }
 }

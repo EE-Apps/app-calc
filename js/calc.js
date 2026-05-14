@@ -188,10 +188,10 @@ class CalcManager {
 
     sheetSet(system, size) {
         if (size === undefined) {
-            size = this.size;
+            size = 'min';
         }
         if (system === undefined) {
-            system = this.system
+            system = 'dec'
         }
         let grid;
         this.size = size;
@@ -315,36 +315,207 @@ class CalcManager {
             grid.classList.add('hex');
             if (size == 'min') {
                 grid.innerHTML = `
-                    <button class="btn bcalc numb" data-val="E" onclick="window.CalcManager.interactClin('add', 'E')">E</button>
-                    <button class="btn bcalc numb" data-val="F" onclick="window.CalcManager.interactClin('add', 'F')">F</button>
+                    <button class="btn bcalc numb bb rr" data-val="E" onclick="window.CalcManager.interactClin('add', 'E')">E</button>
+                    <button class="btn bcalc numb ll" data-val="F" onclick="window.CalcManager.interactClin('add', 'F')">F</button>
                     <button class="btn bcalc oper" data-val="^" onclick="window.CalcManager.interactClin('add', '^')">^</button>
-                    <button class="btn bcalc oper" data-val="(" onclick="window.CalcManager.interactClin('add', '(')">(</button>
-                    <button class="btn bcalc oper" data-val=")" onclick="window.CalcManager.interactClin('add', ')')">)</button>
-                    <button class="btn bcalc numb" data-val="D" onclick="window.CalcManager.interactClin('add', 'D')">D</button>
-                    <button class="btn bcalc func" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
-                    <button class="btn bcalc func" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
-                    <button class="btn bcalc oper" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
-                    <button class="btn bcalc oper" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">÷</button>
-                    <button class="btn bcalc numb" data-val="C" onclick="window.CalcManager.interactClin('add', 'C')">C</button>
-                    <button class="btn bcalc numb" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
-                    <button class="btn bcalc numb" data-val="8" onclick="window.CalcManager.interactClin('add', '8')">8</button>
-                    <button class="btn bcalc numb" data-val="9" onclick="window.CalcManager.interactClin('add', '9')">9</button>
-                    <button class="btn bcalc oper" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">×</button>
-                    <button class="btn bcalc numb" data-val="B" onclick="window.CalcManager.interactClin('add', 'B')">B</button>
-                    <button class="btn bcalc numb" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
-                    <button class="btn bcalc numb" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
-                    <button class="btn bcalc numb" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
-                    <button class="btn bcalc oper" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
-                    <button class="btn bcalc numb" data-val="A" onclick="window.CalcManager.interactClin('add', 'A')">A</button>
-                    <button class="btn bcalc numb" data-val="1" onclick="window.CalcManager.interactClin('add', '1')">1</button>
-                    <button class="btn bcalc numb" data-val="2" onclick="window.CalcManager.interactClin('add', '2')">2</button>
-                    <button class="btn bcalc numb" data-val="3" onclick="window.CalcManager.interactClin('add', '3')">3</button>
-                    <button class="btn bcalc oper" data-val="+" onclick="window.CalcManager.interactClin('add', '+')">+</button>
+                    <button class="btn bcalc oper rr" data-val="(" onclick="window.CalcManager.interactClin('add', '(')">(</button>
+                    <button class="btn bcalc oper ll" data-val=")" onclick="window.CalcManager.interactClin('add', ')')">)</button>
+                    <button class="btn bcalc numb bb tt" data-val="D" onclick="window.CalcManager.interactClin('add', 'D')">D</button>
+                    <button class="btn bcalc func rr" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func ll rr" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
+                    <button class="btn bcalc oper ll" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper bb" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">÷</button>
+                    <button class="btn bcalc numb bb tt" data-val="C" onclick="window.CalcManager.interactClin('add', 'C')">C</button>
+                    <button class="btn bcalc numb bb rr" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
+                    <button class="btn bcalc numb bb rr ll" data-val="8" onclick="window.CalcManager.interactClin('add', '8')">8</button>
+                    <button class="btn bcalc numb bb ll" data-val="9" onclick="window.CalcManager.interactClin('add', '9')">9</button>
+                    <button class="btn bcalc oper bb tt" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">×</button>
+                    <button class="btn bcalc numb bb tt" data-val="B" onclick="window.CalcManager.interactClin('add', 'B')">B</button>
+                    <button class="btn bcalc numb bb tt rr" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb bb tt rr ll" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb bb tt ll" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper bb tt" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc numb tt" data-val="A" onclick="window.CalcManager.interactClin('add', 'A')">A</button>
+                    <button class="btn bcalc numb tt rr" data-val="1" onclick="window.CalcManager.interactClin('add', '1')">1</button>
+                    <button class="btn bcalc numb tt rr ll" data-val="2" onclick="window.CalcManager.interactClin('add', '2')">2</button>
+                    <button class="btn bcalc numb tt ll" data-val="3" onclick="window.CalcManager.interactClin('add', '3')">3</button>
+                    <button class="btn bcalc oper bb tt" data-val="+" onclick="window.CalcManager.interactClin('add', '+')">+</button>
                     <button class="btn bcalc gray" data-val="more" onclick="window.CalcManager.sheetSet(undefined, 'mid')">«</button>
-                    <button class="btn bcalc numb" data-val="∞" onclick="window.CalcManager.interactClin('add', '∞')">∞</button>
+                    <button class="btn bcalc oper" data-val="x" onclick="window.CalcManager.interactClin('add', 'x')">x</button>
                     <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
                     <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
-                    <button class="btn bcalc func" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>`
+                    <button class="btn bcalc func tt" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>`;
+            } else if (size == 'mid') {
+                grid.innerHTML = `
+                    <button class="btn bcalc oper" data-val="%" onclick="window.CalcManager.interactClin('add', '%')">%</button>
+                    <button class="btn bcalc opeb" data-val="xqrt" onclick="window.CalcManager.interactClin('add', 'xqrt(')">x√</button>
+                    <button class="btn bcalc opeb rr" data-val="sqrt" onclick="window.CalcManager.interactClin('add', 'sqrt(')">√</button>
+                    <button class="btn bcalc oper ll" data-val="!" onclick="window.CalcManager.interactClin('add', '!')">x!</button>
+                    <button class="btn bcalc numb rr" data-val="A" onclick="window.CalcManager.interactClin('add', 'A')">A</button>
+                    <button class="btn bcalc numb ll rr" data-val="B" onclick="window.CalcManager.interactClin('add', 'B')">B</button>
+                    <button class="btn bcalc numb ll rr" data-val="C" onclick="window.CalcManager.interactClin('add', 'C')">C</button>
+                    <button class="btn bcalc numb ll" data-val="D" onclick="window.CalcManager.interactClin('add', 'D')">D</button>
+                    <button class="btn bcalc func rr" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func ll rr" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
+                    <button class="btn bcalc oper ll" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper bb" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">÷</button>
+                    <button class="btn bcalc opeb" data-val="mod" onclick="window.CalcManager.interactClin('add', 'mod')">mod</button>
+                    <button class="btn bcalc opeb bb rr" data-val="E" onclick="window.CalcManager.interactClin('add', 'E')">E</button>
+                    <button class="btn bcalc opeb bb ll rr" data-val="F" onclick="window.CalcManager.interactClin('add', 'F')">F</button>
+                    <button class="btn bcalc oper bb ll" data-val="x" onclick="window.CalcManager.interactClin('add', 'x')">x</button>
+                    <button class="btn bcalc oper rr" data-val="(" onclick="window.CalcManager.interactClin('add', '(')">(</button>
+                    <button class="btn bcalc oper ll" data-val=")" onclick="window.CalcManager.interactClin('add', ')')">)</button>
+                    <button class="btn bcalc numb bb rr" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
+                    <button class="btn bcalc numb bb ll rr" data-val="8" onclick="window.CalcManager.interactClin('add', '8')">8</button>
+                    <button class="btn bcalc numb bb ll" data-val="9" onclick="window.CalcManager.interactClin('add', '9')">9</button>
+                    <button class="btn bcalc oper bb tt" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">×</button>
+                    <button class="btn bcalc oper" data-val="^" onclick="window.CalcManager.interactClin('add', '^')">^</button>
+                    <button class="btn bcalc numb bb tt rr" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb bb tt ll rr" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb bb tt ll" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper bb tt" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc gray rr" data-val="more" onclick="window.CalcManager.sheetSet(undefined, 'max')">«</button>
+                    <button class="btn bcalc gray ll" data-val="less" onclick="window.CalcManager.sheetSet(undefined, 'min')">»</button>
+                    <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
+                    <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
+                    <button class="btn bcalc func tt" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>`;
+            } else if (size == 'max') {
+                grid.innerHTML = `
+                    <button class="btn bcalc opeb bb rr" data-val="sin" onclick="window.CalcManager.interactClin('add', 'sin(')">sin</button>
+                    <button class="btn bcalc opeb bb ll rr" data-val="cos" onclick="window.CalcManager.interactClin('add', 'cos(')">cos</button>
+                    <button class="btn bcalc opeb bb ll rr" data-val="tan" onclick="window.CalcManager.interactClin('add', 'tan(')">tan</button>
+                    <button class="btn bcalc opeb bb ll" data-val="ctan" onclick="window.CalcManager.interactClin('add', 'ctan(')">ctg</button>
+                    <button class="btn bcalc opeb rr" data-val="log" onclick="window.CalcManager.interactClin('add', 'log(')">log</button>
+                    <button class="btn bcalc opeb ll" data-val="exp" onclick="window.CalcManager.interactClin('add', 'exp(')">exp</button>
+                    <button class="btn bcalc opeb tt rr" data-val="asin" onclick="window.CalcManager.interactClin('add', 'asin(')">asin</button>
+                    <button class="btn bcalc opeb tt ll rr" data-val="acos" onclick="window.CalcManager.interactClin('add', 'acos(')">acos</button>
+                    <button class="btn bcalc opeb tt ll rr" data-val="atan" onclick="window.CalcManager.interactClin('add', 'atan(')">atan</button>
+                    <button class="btn bcalc opeb tt ll" data-val="acot" onclick="window.CalcManager.interactClin('add', 'acot(')">actg</button>
+                    <button class="btn bcalc oper rr" data-val="(" onclick="window.CalcManager.interactClin('add', '(')">(</button>
+                    <button class="btn bcalc oper ll" data-val=")" onclick="window.CalcManager.interactClin('add', ')')">)</button>
+                    <button class="btn bcalc oper rr" data-val="sqrt" onclick="window.CalcManager.interactClin('add', 'sqrt(')">√</button>
+                    <button class="btn bcalc oper ll" data-val="xqrt" onclick="window.CalcManager.interactClin('add', 'xqrt(')">x√</button>
+                    <button class="btn bcalc func rr" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func ll rr" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
+                    <button class="btn bcalc oper ll" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper bb" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">÷</button>
+                    <button class="btn bcalc oper" data-val="!" onclick="window.CalcManager.interactClin('add', '!')">x!</button>
+                    <button class="btn bcalc oper" data-val="%" onclick="window.CalcManager.interactClin('add', '%')">%</button>
+                    <button class="btn bcalc opeb bb rr" data-val="A" onclick="window.CalcManager.interactClin('add', 'A')">A</button>
+                    <button class="btn bcalc opeb bb ll rr" data-val="B" onclick="window.CalcManager.interactClin('add', 'B')">B</button>
+                    <button class="btn bcalc opeb bb ll rr" data-val="C" onclick="window.CalcManager.interactClin('add', 'C')">C</button>
+                    <button class="btn bcalc opeb bb ll" data-val="D" onclick="window.CalcManager.interactClin('add', 'D')">D</button>
+                    <button class="btn bcalc oper bb tt" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">×</button>
+                    <button class="btn bcalc opeb" data-val="mod" onclick="window.CalcManager.interactClin('add', 'mod')">mod</button>
+                    <button class="btn bcalc opeb rr" data-val="E" onclick="window.CalcManager.interactClin('add', 'E')">E</button>
+                    <button class="btn bcalc opeb ll" data-val="F" onclick="window.CalcManager.interactClin('add', 'F')">F</button>
+                    <button class="btn bcalc numb bb tt rr" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb bb tt ll rr" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb bb tt ll" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper bb tt" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc oper rr" data-val="^" onclick="window.CalcManager.interactClin('add', '^')">^</button>
+                    <button class="btn bcalc oper ll" data-val="x" onclick="window.CalcManager.interactClin('add', 'x')">x</button>
+                    <button class="btn bcalc numb tt rr" data-val="1" onclick="window.CalcManager.interactClin('add', '1')">1</button>
+                    <button class="btn bcalc numb tt ll rr" data-val="2" onclick="window.CalcManager.interactClin('add', '2')">2</button>
+                    <button class="btn bcalc numb tt ll" data-val="3" onclick="window.CalcManager.interactClin('add', '3')">3</button>
+                    <button class="btn bcalc oper bb tt" data-val="+" onclick="window.CalcManager.interactClin('add', '+')">+</button>
+                    <button class="btn bcalc gray" data-val="less" onclick="window.CalcManager.sheetSet(undefined, 'mid')">»</button>
+                    <button class="btn bcalc oper" data-val="y" onclick="window.CalcManager.interactClin('add', 'y')">y</button>
+                    <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
+                    <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
+                    <button class="btn bcalc func tt" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>`;
+            }
+        } else if (system == 8) {
+            grid.classList.add('oct');
+            if (size == 'min') {
+                grid.innerHTML = `
+                    <button class="btn bcalc func rr" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func ll rr" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
+                    <button class="btn bcalc oper ll" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper bb" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">÷</button>
+                    <button class="btn bcalc numb bb" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
+                    <button class="btn bcalc oper" data-val="^" onclick="window.CalcManager.interactClin('add', '^')">^</button>
+                    <button class="btn bcalc oper" data-val="sqrt" onclick="window.CalcManager.interactClin('add', 'sqrt(')">√</button>
+                    <button class="btn bcalc oper bb tt" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">×</button>
+                    <button class="btn bcalc numb bb tt rr" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb bb ll rr" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb bb ll" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper bb tt" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc numb tt rr" data-val="1" onclick="window.CalcManager.interactClin('add', '1')">1</button>
+                    <button class="btn bcalc numb tt ll rr" data-val="2" onclick="window.CalcManager.interactClin('add', '2')">2</button>
+                    <button class="btn bcalc numb tt ll" data-val="3" onclick="window.CalcManager.interactClin('add', '3')">3</button>
+                    <button class="btn bcalc oper tt bb" data-val="+" onclick="window.CalcManager.interactClin('add', '+')">+</button>
+                    <button class="btn bcalc gray" data-val="more" onclick="window.CalcManager.sheetSet(undefined, 'mid')">«</button>
+                    <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
+                    <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
+                    <button class="btn bcalc func tt" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>`;
+            } else if (size == 'mid') {
+                grid.innerHTML = `
+                    <button class="btn bcalc oper" data-val="^" onclick="window.CalcManager.interactClin('add', '^')">^</button>
+                    <button class="btn bcalc oper" data-val="%" onclick="window.CalcManager.interactClin('add', '%')">%</button>
+                    <button class="btn bcalc opeb rr" data-val="sqrt" onclick="window.CalcManager.interactClin('add', 'sqrt(')">√</button>
+                    <button class="btn bcalc opeb ll" data-val="xqrt" onclick="window.CalcManager.interactClin('add', 'xqrt(')">x√</button>
+                    <button class="btn bcalc oper rr" data-val="(" onclick="window.CalcManager.interactClin('add', '(')">(</button>
+                    <button class="btn bcalc oper ll" data-val=")" onclick="window.CalcManager.interactClin('add', ')')">)</button>
+                    <button class="btn bcalc oper" data-val="!" onclick="window.CalcManager.interactClin('add', '!')">x!</button>
+                    <button class="btn bcalc oper" data-val="x" onclick="window.CalcManager.interactClin('add', 'x')">x</button>
+                    <button class="btn bcalc func rr" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func ll rr" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
+                    <button class="btn bcalc oper ll" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper bb" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">÷</button>
+                    <button class="btn bcalc opeb" data-val="mod" onclick="window.CalcManager.interactClin('add', 'mod')">mod</button>
+                    <button class="btn bcalc numb bb rr" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
+                    <button class="btn bcalc numb bb ll rr" data-val="8" onclick="window.CalcManager.interactClin('add', '8')">8</button>
+                    <button class="btn bcalc numb bb ll" data-val="9" onclick="window.CalcManager.interactClin('add', '9')">9</button>
+                    <button class="btn bcalc oper bb tt" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">×</button>
+                    <button class="btn bcalc opeb rr" data-val="y" onclick="window.CalcManager.interactClin('add', 'y')">y</button>
+                    <button class="btn bcalc numb bb tt rr" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb bb tt ll rr" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb bb tt ll" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper bb tt" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc gray rr" data-val="more" onclick="window.CalcManager.sheetSet(undefined, 'max')">«</button>
+                    <button class="btn bcalc gray ll" data-val="less" onclick="window.CalcManager.sheetSet(undefined, 'min')">»</button>
+                    <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
+                    <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
+                    <button class="btn bcalc func tt" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>`;
+            } else if (size == 'max') {
+                grid.innerHTML = `
+                    <button class="btn bcalc opeb bb rr" data-val="sin" onclick="window.CalcManager.interactClin('add', 'sin(')">sin</button>
+                    <button class="btn bcalc opeb bb ll rr" data-val="cos" onclick="window.CalcManager.interactClin('add', 'cos(')">cos</button>
+                    <button class="btn bcalc opeb bb ll rr" data-val="tan" onclick="window.CalcManager.interactClin('add', 'tan(')">tan</button>
+                    <button class="btn bcalc opeb bb ll" data-val="ctan" onclick="window.CalcManager.interactClin('add', 'ctan(')">ctg</button>
+                    <button class="btn bcalc opeb rr" data-val="log" onclick="window.CalcManager.interactClin('add', 'log(')">log</button>
+                    <button class="btn bcalc opeb ll" data-val="exp" onclick="window.CalcManager.interactClin('add', 'exp(')">exp</button>
+                    <button class="btn bcalc opeb tt rr" data-val="asin" onclick="window.CalcManager.interactClin('add', 'asin(')">asin</button>
+                    <button class="btn bcalc opeb tt ll rr" data-val="acos" onclick="window.CalcManager.interactClin('add', 'acos(')">acos</button>
+                    <button class="btn bcalc opeb tt ll rr" data-val="atan" onclick="window.CalcManager.interactClin('add', 'atan(')">atan</button>
+                    <button class="btn bcalc opeb tt ll" data-val="acot" onclick="window.CalcManager.interactClin('add', 'acot(')">actg</button>
+                    <button class="btn bcalc oper rr" data-val="(" onclick="window.CalcManager.interactClin('add', '(')">(</button>
+                    <button class="btn bcalc oper ll" data-val=")" onclick="window.CalcManager.interactClin('add', ')')">)</button>
+                    <button class="btn bcalc oper rr" data-val="sqrt" onclick="window.CalcManager.interactClin('add', 'sqrt(')">√</button>
+                    <button class="btn bcalc oper ll" data-val="xqrt" onclick="window.CalcManager.interactClin('add', 'xqrt(')">x√</button>
+                    <button class="btn bcalc func rr" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func ll rr" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
+                    <button class="btn bcalc oper ll" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper bb" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">÷</button>
+                    <button class="btn bcalc oper" data-val="!" onclick="window.CalcManager.interactClin('add', '!')">x!</button>
+                    <button class="btn bcalc oper" data-val="%" onclick="window.CalcManager.interactClin('add', '%')">%</button>
+                    <button class="btn bcalc oper" data-val="^" onclick="window.CalcManager.interactClin('add', '^')">^</button>
+                    <button class="btn bcalc oper" data-val="x" onclick="window.CalcManager.interactClin('add', 'x')">x</button>
+                    <button class="btn bcalc oper" data-val="y" onclick="window.CalcManager.interactClin('add', 'y')">y</button>
+                    <button class="btn bcalc opeb" data-val="mod" onclick="window.CalcManager.interactClin('add', 'mod')">mod</button>
+                    <button class="btn bcalc numb bb rr" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
+                    <button class="btn bcalc numb bb ll rr" data-val="8" onclick="window.CalcManager.interactClin('add', '8')">8</button>
+                    <button class="btn bcalc numb bb ll" data-val="9" onclick="window.CalcManager.interactClin('add', '9')">9</button>
+                    <button class="btn bcalc oper bb tt" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">×</button>
+                    <button class="btn bcalc numb bb tt rr" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb bb tt ll rr" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb bb tt ll" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper bb tt" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc gray" data-val="less" onclick="window.CalcManager.sheetSet(undefined, 'mid')">»</button>
+                    <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
+                    <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
+                    <button class="btn bcalc func tt" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>`;
             }
         }
     }

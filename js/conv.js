@@ -2,12 +2,23 @@ let numOfChosing = 0;
 let numOfEntering = 0;
 let converters = {};
 let currentConverter = 'length';
+let collapsedCategories = {};
+
+// 🎨 Названия категорий для отображения
+const categoryNames = {
+    metric: 'Метрическая',
+    imperial: 'Имперская',
+    ancient: 'Старинная',
+    sea: 'Морская',
+    astronomic: 'Астрономическая',
+    delete: 'Delete'
+};
 
 function convOpen(convName) {
     const pages = Array.from(document.getElementsByClassName('page'));
     pages.forEach(element => element.classList.remove('active'));
 
-    document.getElementById('pconv').classList.add('active');
+    document.getElementById('pconv')?.classList.add('active');
     localStorage.setItem('page', 'pconv');
 
     currentConverter = convName;
@@ -17,95 +28,307 @@ function convOpen(convName) {
     convUpdate();
 }
 
+function convCreateUnitsList() {
+    const container = document.getElementById('convChoseValues');
+    if (!container) return;
+    container.innerHTML = '';
+
+    const converterData = convUnitsData?.[currentConverter];
+    if (!converterData || typeof converterData !== 'object') return;
+
+    // 🔄 Загружаем сохранённое состояние сворачивания
+    const collapsed = loadCollapsedState(currentConverter);
+
+    // 1️⃣ Кнопка "удалить"
+    if (converterData.delete) {
+        const delRow = document.createElement('tr');
+        delRow.className = 'unitStringDelete';
+        delRow.innerHTML = `<td colspan="3" onclick="convPlaceDel(${numOfChosing})">Delete</td>`;
+        container.appendChild(delRow);
+    }
+
+    // 2️⃣ Категории с единицами
+    Object.entries(converterData).forEach(([categoryKey, units]) => {
+        if (categoryKey === 'delete' || !Array.isArray(units)) return;
+
+        const isCollapsed = collapsed[categoryKey] === true;
+        const displayName = categoryNames[categoryKey] || categoryKey;
+        const arrow = isCollapsed ? '▶' : '▼';
+
+        // 📌 Заголовок категории (кликабельный)
+        const headerRow = document.createElement('tr');
+        headerRow.className = 'unitCategoryHeader';
+        headerRow.innerHTML = `
+            <td colspan="3">
+                <strong>
+                    <span class="category-toggle">${arrow}</span>
+                    ${displayName}
+                    <span class="category-count">(${units.length})</span>
+                </strong>
+            </td>
+        `;
+        
+        // 🎯 Обработчик клика по заголовку
+        headerRow.onclick = (e) => {
+            e.stopPropagation(); // чтобы не сработал onclick у вложенных элементов
+            toggleCategory(currentConverter, categoryKey);
+        };
+        
+        container.appendChild(headerRow);
+
+        // 📦 Единицы категории (скрыты, если категория свёрнута)
+        units.forEach(unit => {
+            const el = document.createElement('tr');
+            el.className = `unitRow ${isCollapsed ? 'collapsed' : ''}`;
+            
+            const safeText = (unit.text || "").replace(/"/g, '&quot;');
+            const safeName = (unit.name || unit.text || "").replace(/"/g, '&quot;');
+            
+            el.setAttribute('onclick', `convSetThis("${safeText}")`);
+            el.innerHTML = `
+                <td>${safeName}</td>
+                <td>${unit.text}</td>
+                <td>${unit.text2 || ''}</td>
+            `;
+            
+            container.appendChild(el);
+        });
+    });
+}
+
 function convPlaceNew() {
     if (!converters[currentConverter]) {
         converters[currentConverter] = [];
     }
-    converters[currentConverter].push({ unit: "см", value: "" }); // по умолчанию "см"
+    // Берём первую доступную единицу из первой категории как дефолт
+    const defaultUnit = getDefaultUnit(currentConverter);
+    converters[currentConverter].push({ unit: defaultUnit, value: "" });
     convUpdate();
 }
 
+// 🆕 Вспомогательная функция: получить первую доступную единицу
+function getDefaultUnit(convName) {
+    const data = convUnitsData?.[convName];
+    if (!data) return "см";
+    
+    // Ищем первую категорию с массивом единиц
+    for (const [key, value] of Object.entries(data)) {
+        if (key !== 'delete' && Array.isArray(value) && value.length > 0) {
+            return value[0].text || "см";
+        }
+    }
+    return "см";
+}
+
+function convPlaceDel(placeN) {
+    if (!converters[currentConverter] || !Array.isArray(converters[currentConverter])) return;
+    
+    converters[currentConverter].splice(placeN, 1);
+    
+    // Корректируем индексы после удаления
+    if (numOfChosing >= converters[currentConverter].length) {
+        numOfChosing = Math.max(0, converters[currentConverter].length - 1);
+    }
+    if (numOfEntering >= converters[currentConverter].length) {
+        numOfEntering = numOfChosing;
+    }
+    
+    convUpdate();
+}
+
+// 🔍 Обновлённый поиск единицы во ВСЕХ категориях
 function convValue(category, fromUnit, toUnit, value) {
-    const cat = convUnitsData[category];
-    if (!cat) throw new Error("Категория не найдена");
+    const cat = convUnitsData?.[category];
+    if (!cat || typeof cat !== 'object') throw new Error("Категория не найдена");
 
-    const from = cat.find(u => u.text === fromUnit);
-    const to = cat.find(u => u.text === toUnit);
+    // Ищем в любом подмассиве категорий
+    let from = null, to = null;
+    
+    for (const [key, units] of Object.entries(cat)) {
+        if (key === 'delete' || !Array.isArray(units)) continue;
+        
+        if (!from) from = units.find(u => u.text === fromUnit);
+        if (!to) to = units.find(u => u.text === toUnit);
+        
+        if (from && to) break; // нашли обе — выходим
+    }
 
-    if (!from || !to) throw new Error("Единица не найдена");
+    if (!from || !to) throw new Error(`Единица не найдена: ${!from ? fromUnit : toUnit}`);
+    
+    const fromConv = parseFloat(from.conv);
+    const toConv = parseFloat(to.conv);
+    
+    if (isNaN(fromConv) || isNaN(toConv) || fromConv === 0) {
+        throw new Error("Некорректные коэффициенты конвертации");
+    }
 
-    const valueInBase = value / parseFloat(from.conv);
-    const result = valueInBase * parseFloat(to.conv);
+    const valueInBase = value / fromConv;
+    return valueInBase * toConv;
+}
 
-    return result;
+// 🔄 Проверка: существует ли единица в текущем конвертере
+function unitExists(convName, unitText) {
+    const data = convUnitsData?.[convName];
+    if (!data) return false;
+    
+    for (const [key, units] of Object.entries(data)) {
+        if (key === 'delete' || !Array.isArray(units)) continue;
+        if (units.some(u => u.text === unitText)) return true;
+    }
+    return false;
 }
 
 function convUpdate() {
     const div = document.getElementById('convplaces');
+    if (!div) return;
+    
     if (!converters[currentConverter]) {
         converters[currentConverter] = [];
     }
 
+    // Генерируем HTML для полей конвертации
     let html = "";
     converters[currentConverter].forEach(function(e, i) {
-        let active = i === numOfChosing ? 'active' : '';
+        const active = i === numOfChosing ? 'active' : '';
+        const safeUnit = (e.unit || "").replace(/"/g, '&quot;');
+        const safeValue = e.value ?? '';
+        
         html += `
             <div id="convN${i}" class="place ${active}">
-                <button onclick="convChoseEl(${i}); document.getElementById('convN${i}').classList.add('active')">${e.unit}</button>
+                <button type="button" class="unit-btn" onclick="convChoseEl(${i})">${safeUnit}</button>
                 <input id="convInput${i}" 
                        type="number" 
-                       value="${e.value}" 
-                       style="border-radius: 0 8px 8px 0; width: 75%;">
+                       value="${safeValue}" 
+                       placeholder="0">
             </div>
         `;
     });
 
     div.innerHTML = html;
 
-    // навешиваем слушатели
-    converters[currentConverter].forEach(function(e, i) {
+    // Навешиваем слушатели на инпуты (без утечек)
+    converters[currentConverter].forEach(function(_, i) {
         const input = document.getElementById(`convInput${i}`);
-        input.addEventListener("input", function() {
-            convRecalculate(i, parseFloat(this.value));
-            numOfEntering = i;
-        });
+        if (input) {
+            // Сбрасываем старые слушатели через клонирование
+            const newInput = input.cloneNode(true);
+            input.parentNode.replaceChild(newInput, input);
+            
+            newInput.addEventListener("input", function() {
+                const val = parseFloat(this.value);
+                if (!isNaN(val)) {
+                    numOfEntering = i;
+                    convRecalculate(i, val);
+                }
+            });
+        }
     });
+    
+    // Обновляем список единиц в модальном окне
+    convCreateUnitsList();
 }
 
-function convChoseEl(value) {
-    numOfChosing = value;
+function convChoseEl(index) {
+    numOfChosing = index;
+    
+    // Обновляем визуальное выделение
     converters[currentConverter].forEach(function(_, i) {
-        document.getElementById(`convN${i}`).classList.remove('active');
+        document.getElementById(`convN${i}`)?.classList.remove('active');
     });
+    document.getElementById(`convN${index}`)?.classList.add('active');
+    
+    // Пересчитываем, если есть активное значение
+    const activeInput = document.getElementById(`convInput${numOfEntering}`);
+    if (activeInput && activeInput.value) {
+        convRecalculate(numOfEntering, parseFloat(activeInput.value));
+    }
 }
 
 function convSetThis(value) {
-    if (!converters[currentConverter]) {
-        converters[currentConverter] = [];
-    }
+    if (!converters[currentConverter]?.[numOfChosing]) return;
+    if (!unitExists(currentConverter, value)) return; // защита от несуществующих единиц
+    
     converters[currentConverter][numOfChosing].unit = value;
     convUpdate();
-    //convRecalculate(numOfChosing, parseFloat(document.getElementById(`convInput${numOfChosing}`).value));
-    convRecalculate(numOfEntering, parseFloat(document.getElementById(`convInput${numOfEntering}`).value));
+    
+    // Пересчитываем от последнего активного поля
+    const input = document.getElementById(`convInput${numOfEntering}`);
+    if (input && input.value !== '') {
+        const val = parseFloat(input.value);
+        if (!isNaN(val)) {
+            convRecalculate(numOfEntering, val);
+        }
+    }
 }
 
 function convRecalculate(fromIndex, fromValue) {
-    if (isNaN(fromValue)) return;
+    // Валидация параметров
+    if (fromIndex === undefined || fromIndex === null) {
+        fromIndex = numOfEntering;
+    }
+    if (isNaN(fromValue) || fromValue === undefined) {
+        const input = document.getElementById(`convInput${fromIndex}`);
+        if (!input || input.value === '') return;
+        fromValue = parseFloat(input.value);
+        if (isNaN(fromValue)) return;
+    }
+
+    if (!converters[currentConverter]?.[fromIndex]) return;
 
     const fromUnit = converters[currentConverter][fromIndex].unit;
-    converters[currentConverter][fromIndex].value = fromValue; // записываем в хранилище
+    converters[currentConverter][fromIndex].value = fromValue;
 
     converters[currentConverter].forEach(function(obj, i) {
         if (i !== fromIndex) {
             const input = document.getElementById(`convInput${i}`);
-            const val = convValue("Длина", fromUnit, obj.unit, fromValue);
-            obj.value = val; // сохраняем результат
-            input.value = val;
+            if (!input) return;
+            
+            try {
+                const val = convValue(currentConverter, fromUnit, obj.unit, fromValue);
+                // Форматирование: целые числа без десятичных, остальные — до 6 знаков
+                const formattedVal = Number.isInteger(val) ? val : parseFloat(val.toFixed(6));
+                obj.value = formattedVal;
+                input.value = formattedVal;
+            } catch (e) {
+                console.warn('Ошибка конвертации:', e.message);
+                input.value = '';
+            }
         }
     });
 }
 
-// пример использования:
-console.log(convValue("Длина", "см", "м", 100)); // 1
-console.log(convValue("Длина", "м", "см", 2));   // 200
-console.log(convValue("Длина", "mi", "км", 1));  // ~1.609
+// 🆕 Получить ключ для хранения состояния категории
+function getCategoryStateKey(convName, categoryKey) {
+    return `conv_collapsed_${convName}_${categoryKey}`;
+}
+
+// 🆕 Загрузить состояние сворачивания из localStorage
+function loadCollapsedState(convName) {
+    const state = {};
+    const prefix = `conv_collapsed_${convName}_`;
+    
+    for (let key in localStorage) {
+        if (key.startsWith(prefix)) {
+            const categoryKey = key.replace(prefix, '');
+            state[categoryKey] = localStorage.getItem(key) === 'true';
+        }
+    }
+    return state;
+}
+
+// 🆕 Переключить состояние категории
+function toggleCategory(convName, categoryKey) {
+    const key = getCategoryStateKey(convName, categoryKey);
+    const currentlyCollapsed = localStorage.getItem(key) === 'true';
+    localStorage.setItem(key, String(!currentlyCollapsed));
+    
+    // Перерисовываем список с обновлённым состоянием
+    convCreateUnitsList();
+}
+
+// 🚀 Инициализация
+document.addEventListener('DOMContentLoaded', () => {
+    if (typeof convUnitsData !== 'undefined') {
+        convCreateUnitsList();
+    }
+});

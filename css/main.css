@@ -3,7 +3,7 @@
 }
 
 body {
-    height: 90vh;
+    margin: 0;
 }
 
 a {
@@ -12,23 +12,25 @@ a {
 }
 
 .container {
-    padding: 20px;
-    border-radius: 8px;
+    border-radius: 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-    margin: 20px auto;
     /*max-width: var(--width);*/
-    height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
-    max-height: 100vh;
+
+    margin: 0;
+    padding: var(--ds);
+    height: calc(100dvh - var(--ds2));
+    width: calc(100dvw - var(--ds2));
+    overflow: hidden;
 }
 
 .btn.bdown {
     padding: 10px 20px;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--brr);
     cursor: pointer;
     transition: background-color 0.3s ease;
     min-width: 25%;
@@ -79,5 +81,6 @@ input {
 
 .pageplace {
     /*height: 100%;*/
-    height: calc(100% - 4rem);
+    min-height: calc(100% - 4rem);
+    max-height: calc(100% - 4rem);
 }

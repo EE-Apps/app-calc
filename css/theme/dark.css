@@ -1,11 +1,29 @@
-body {
-    background-color: #101010;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
+:root {
+    --color-main: 0;
+    --color-main-hue: 0;
+
+
+
+    --color-bg-lightness: 10%;
+
+    --bg:   hsl(var(--color-main) var(--color-main-hue) calc(var(--color-bg-lightness) * 1  ));
+    --bg2:  hsl(var(--color-main) var(--color-main-hue) calc(var(--color-bg-lightness) * 1.2));
+    --bg3:  hsl(var(--color-main) var(--color-main-hue) calc(var(--color-bg-lightness) * 1.5));
+    --bg4:  hsl(var(--color-main) var(--color-main-hue) calc(var(--color-bg-lightness) * 2  ));
+
+
+
+    --color-btn-lightness: 15%;
+
+    --color-btn:        hsl(var(--color-main) var(--color-main-hue) calc(var(--color-btn-lightness) * 1));
+    --color-btn-hover:  hsl(var(--color-main) var(--color-main-hue) calc(var(--color-btn-lightness) * 1.5));
+    --color-btn-active: hsl(var(--color-main) var(--color-main-hue) calc(var(--color-btn-lightness) * 2));
 }
 
-.container {
-    background-color: #1a1a1a;
+body {
+    background-color: var(--bg);
+    color: #ffffff;
+    font-family: Arial, sans-serif;
 }
 
 .btn.bdown {
@@ -83,13 +101,4 @@ textarea {
 .btn.bsys {
     background-color: #262626;
     color: #ffffff
-}
-
-.place button {
-    background-color: #2a2a2a;
-    color: white;
-}
-
-.place.active button, .place.active input {
-    background-color: #4a4a4a;
 }

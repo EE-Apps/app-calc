@@ -86,7 +86,7 @@
 }
 
 .btn.bsys {
-    border-radius: 8px;
+    border-radius: var(--brr);
     border: none;
     width: 100%;
     transition: background 0.3s ease;
@@ -117,6 +117,7 @@
     .buttonsplace {
         width: 50%;
         height: calc(100% - 18px );
+        height: 100%;
     }
 
     .inputplace {

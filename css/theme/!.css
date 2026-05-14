@@ -1,0 +1,13 @@
+:root {
+    --ds: 1rem;
+    --dss: 0.5rem;
+    --ds2: calc(var(--ds) * 2);
+
+    --br: 2rem;
+    --bs: 1rem;
+    --brr: 9999px;
+    
+    --maxpage: 800px;
+
+    --tr: 0.4s ease
+}
