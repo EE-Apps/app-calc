@@ -188,10 +188,18 @@ class CalcManager {
 
     sheetSet(system, size) {
         if (size === undefined) {
-            size = 'min';
+            if (this.size === undefined) {
+                size = 'min';
+            } else {
+                size = this.size
+            }
         }
         if (system === undefined) {
-            system = 'dec'
+            if (this.system === undefined) {
+                system = 'dec';
+            } else {
+                system = this.system
+            }
         }
         let grid;
         this.size = size;
