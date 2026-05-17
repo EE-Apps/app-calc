@@ -41,10 +41,14 @@ function convCreateUnitsList() {
 
     // 1️⃣ Кнопка "удалить"
     if (converterData.delete) {
-        const delRow = document.createElement('tr');
-        delRow.className = 'unitStringDelete';
-        delRow.innerHTML = `<td colspan="3" onclick="convPlaceDel(${numOfChosing})">Delete</td>`;
-        container.appendChild(delRow);
+        const delDiv = document.createElement('div');
+        delDiv.className = 'unitStringDelete';
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.textContent = 'Delete';
+        delBtn.onclick = () => convPlaceDel(numOfChosing);
+        delDiv.appendChild(delBtn);
+        container.appendChild(delDiv);
     }
 
     // 2️⃣ Категории с единицами
@@ -56,42 +60,42 @@ function convCreateUnitsList() {
         const arrow = isCollapsed ? '▶' : '▼';
 
         // 📌 Заголовок категории (кликабельный)
-        const headerRow = document.createElement('tr');
-        headerRow.className = 'unitCategoryHeader';
-        headerRow.innerHTML = `
-            <td colspan="3">
-                <strong>
-                    <span class="category-toggle">${arrow}</span>
-                    ${displayName}
-                    <span class="category-count">(${units.length})</span>
-                </strong>
-            </td>
+        const headerDiv = document.createElement('div');
+        headerDiv.className = 'unitCategoryHeader';
+        const headerBtn = document.createElement('button');
+        headerBtn.type = 'button';
+        headerBtn.innerHTML = `
+            <span class="category-toggle">${arrow}</span>
+            <span class="category-name">${displayName}</span>
+            <span class="category-count">(${units.length})</span>
         `;
-        
-        // 🎯 Обработчик клика по заголовку
-        headerRow.onclick = (e) => {
-            e.stopPropagation(); // чтобы не сработал onclick у вложенных элементов
+        headerBtn.onclick = (e) => {
+            e.stopPropagation();
             toggleCategory(currentConverter, categoryKey);
         };
-        
-        container.appendChild(headerRow);
+        headerDiv.appendChild(headerBtn);
+        container.appendChild(headerDiv);
 
         // 📦 Единицы категории (скрыты, если категория свёрнута)
         units.forEach(unit => {
-            const el = document.createElement('tr');
-            el.className = `unitRow ${isCollapsed ? 'collapsed' : ''}`;
+            const unitDiv = document.createElement('div');
+            unitDiv.className = `unitRow ${isCollapsed ? 'collapsed' : ''}`;
             
             const safeText = (unit.text || "").replace(/"/g, '&quot;');
             const safeName = (unit.name || unit.text || "").replace(/"/g, '&quot;');
             
-            el.setAttribute('onclick', `convSetThis("${safeText}")`);
-            el.innerHTML = `
-                <td>${safeName}</td>
-                <td>${unit.text}</td>
-                <td>${unit.text2 || ''}</td>
+            const unitBtn = document.createElement('button');
+            unitBtn.type = 'button';
+            unitBtn.className = 'unitButton';
+            unitBtn.innerHTML = `
+                <span class="unit-name">${safeName}</span>
+                <span class="unit-text">${unit.text}</span>
+                <span class="unit-value">${unit.text2 || ''}</span>
             `;
+            unitBtn.onclick = () => convSetThis(safeText);
             
-            container.appendChild(el);
+            unitDiv.appendChild(unitBtn);
+            container.appendChild(unitDiv);
         });
     });
 }

@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8" />
     <title>Calc EE</title>
-    <!--link rel="icon" href="img/ico.svg" type="image/svg+xml" /-->
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="css/theme/!.css" />
     <link rel="stylesheet" href="fonts/!fonts.css" />
@@ -13,6 +12,7 @@
     <link rel="stylesheet" href="css/theme/dark.css" />
     <link rel="stylesheet" href="css/conv.css" />
     <link rel="stylesheet" href="css/about.css" />
+    <link rel="stylesheet" href="css/currency.css" />
 
     <!-- ADAPTATIONS -->
     <link rel="stylesheet" href="css/adaprivity/portrait.css" />
@@ -21,11 +21,10 @@
     <link rel="stylesheet" href="css/adaprivity/wide.css" />
 
     <!-- NERDAMER -->
-        <script src="js/lib/nerdamer/nerdamer.core.js"></script>
-        <script src="js/lib/nerdamer/Calculus.js"></script>
-        <script src="js/lib/nerdamer/Algebra.js"></script>
-        <script src="js/lib/nerdamer/Solve.js"></script>
-        <!--script src="js/lib/nerdamer"></script-->
+    <script src="js/lib/nerdamer/nerdamer.core.js"></script>
+    <script src="js/lib/nerdamer/Calculus.js"></script>
+    <script src="js/lib/nerdamer/Algebra.js"></script>
+    <script src="js/lib/nerdamer/Solve.js"></script>
     <!-- NERDAMER -->
 
     <script src="js/lib/jquery-3.7.1.min.js"></script>
@@ -35,101 +34,94 @@
     <script src="js/pages.js"></script>
     <script src="js/modules/calculator.js"></script>
     <script src="js/convData.js"></script>
+    <script src="js/currencyRates.js"></script>
     <script src="js/converters.js"></script>
     <script src="js/conv.js"></script>
+    <script src="js/currencyConverterUI.js"></script>
 </head>
 <body>
     <div class="container">
-        <div class="head">
-
-        </div>
+        <div class="head"></div>
         <div class="pageplace">
+
+            <!-- ═══════════════ CALCULATOR ═══════════════ -->
             <div class="page pcalc active" id="pcalc">
                 <div class="upper">
-                <div class="systemplace">
-                    <button class="btn bsys" id="sys2" onclick="window.CalcManager.sysSwitch(2)">BIN</button>
-                    <button class="btn bsys" id="sys8" onclick="window.CalcManager.sysSwitch(8)">OCT</button>
-                    <button class="btn bsys active" id="sys10" onclick="window.CalcManager.sysSwitch(10)">DEC</button>
-                    <button class="btn bsys" id="sys16" onclick="window.CalcManager.sysSwitch(16)">HEX</button>
-                    <button class="btn bsys" id="sysCUSTOM" onclick="window.CalcManager.sysSwitch(prompt())">—</button></button>
-                </div>
-                <div class="inputplace">
-                    <div class="inputup">
-                        <textarea type="text" class="inputcalc" id="clin" placeholder="..." ></textarea>
-                        <div class="resbox">
-                            <pre id="result">ENOT</pre>
+                    <div class="systemplace">
+                        <button class="btn bsys" id="sys2"      onclick="window.CalcManager.sysSwitch(2)">BIN</button>
+                        <button class="btn bsys" id="sys8"      onclick="window.CalcManager.sysSwitch(8)">OCT</button>
+                        <button class="btn bsys active" id="sys10" onclick="window.CalcManager.sysSwitch(10)">DEC</button>
+                        <button class="btn bsys" id="sys16"     onclick="window.CalcManager.sysSwitch(16)">HEX</button>
+                        <button class="btn bsys" id="sysCUSTOM" onclick="window.CalcManager.sysSwitch(prompt())">—</button>
+                    </div>
+                    <div class="inputplace">
+                        <div class="inputup">
+                            <textarea type="text" class="inputcalc" id="clin" placeholder="..."></textarea>
+                            <div class="resbox">
+                                <pre id="result">ENOT</pre>
+                            </div>
+                        </div>
+                        <div class="inputdown">
+                            <div class="circle">
+                                <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Копировать" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="10" height="12" rx="2"/>
+                                    <rect x="5" y="3" width="10" height="12" rx="2"/>
+                                </svg>
+                            </div>
+                            <div class="circle">
+                                <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Копировать с результатом" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="9" y="9" width="10" height="12" rx="2"/>
+                                    <rect x="5" y="3" width="10" height="12" rx="2"/>
+                                    <line x1="14" y1="13" x2="18" y2="13"/>
+                                    <line x1="14" y1="16" x2="18" y2="16"/>
+                                </svg>
+                            </div>
+                            <div class="circle">
+                                <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Вставить" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 4h6"/>
+                                    <path d="M8 7h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/>
+                                    <path d="M12 11v6"/>
+                                    <path d="M9 14h6"/>
+                                </svg>
+                            </div>
+                            <div class="circle">
+                                <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Вставить (заменив всё)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 4h6"/>
+                                    <rect x="6" y="7" width="12" height="12" rx="2"/>
+                                    <path d="M12 10v5"/>
+                                    <path d="M9.5 12.5h5"/>
+                                    <path d="M16.5 8.5h1.5v1.5"/>
+                                    <path d="M18 10a4 4 0 1 1-2-3.46"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
-                    <div class="inputdown">
-                        <div class="circle">
-                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Копировать" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="9" y="9" width="10" height="12" rx="2"/>
-                                <rect x="5" y="3" width="10" height="12" rx="2"/>
-                            </svg>
-                        </div>
-                        <div class="circle">
-                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Копировать с результатом" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="9" y="9" width="10" height="12" rx="2"/>
-                                <rect x="5" y="3" width="10" height="12" rx="2"/>
-                                <line x1="14" y1="13" x2="18" y2="13"/>
-                                <line x1="14" y1="16" x2="18" y2="16"/>
-                            </svg>
-                        </div>
-                        <div class="circle">
-                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Вставить" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 4h6"/>
-                                <path d="M8 7h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z"/>
-                                <path d="M12 11v6"/>
-                                <path d="M9 14h6"/>
-                            </svg>
-                        </div>
-                        <div class="circle">
-                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Вставить (заменив всё)" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M9 4h6"/>
-                                <rect x="6" y="7" width="12" height="12" rx="2"/>
-                                <path d="M12 10v5"/>
-                                <path d="M9.5 12.5h5"/>
-                                <path d="M16.5 8.5h1.5v1.5"/>
-                                <path d="M18 10a4 4 0 1 1-2-3.46"/>
-                            </svg>
-                        </div>
-                        <!--div class="circle">
-                            <svg class="circle" width="24" height="24" viewBox="0 0 24 24" role="img" aria-label="Клавиатура" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="3" y="6" width="18" height="12" rx="2"/>
-                                <path d="M6 10h1 M9 10h1 M12 10h1 M15 10h1 M18 10h1"/>
-                                <path d="M6 13h1 M9 13h1 M12 13h1 M15 13h1 M18 13h1"/>
-                                <path d="M6 16h10"/>
-                            </svg>
-                        </div-->
-                    </div>
-                    <!--div class="inputright">
-                        <pre id="result">ENOT</pre>
-                    </div-->
-                </div>
                 </div>
                 <div class="buttonsplace min dec" id="buttonsplace">
-                    <button class="btn bcalc func" data-val="clear" onclick="window.CalcManager.interactClin('clear', '')">AC</button>
+                    <button class="btn bcalc func" data-val="clear"  onclick="window.CalcManager.interactClin('clear', '')">AC</button>
                     <button class="btn bcalc func" data-val="backsp" onclick="window.CalcManager.interactClin('delBack', 1)">←</button>
-                    <button class="btn bcalc oper" data-val="+or-" onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
-                    <button class="btn bcalc oper" data-val="/" onclick="window.CalcManager.interactClin('add', '/')">/</button>
-                    <button class="btn bcalc numb" data-val="7" onclick="window.CalcManager.interactClin('add', '7')">7</button>
-                    <button class="btn bcalc numb" data-val="8" onclick="window.CalcManager.interactClin('add', '8')">8</button>
-                    <button class="btn bcalc numb" data-val="9" onclick="window.CalcManager.interactClin('add', '9')">9</button>
-                    <button class="btn bcalc oper" data-val="*" onclick="window.CalcManager.interactClin('add', '*')">*</button>
-                    <button class="btn bcalc numb" data-val="4" onclick="window.CalcManager.interactClin('add', '4')">4</button>
-                    <button class="btn bcalc numb" data-val="5" onclick="window.CalcManager.interactClin('add', '5')">5</button>
-                    <button class="btn bcalc numb" data-val="6" onclick="window.CalcManager.interactClin('add', '6')">6</button>
-                    <button class="btn bcalc oper" data-val="-" onclick="window.CalcManager.interactClin('add', '-')">-</button>
-                    <button class="btn bcalc numb" data-val="1" onclick="window.CalcManager.interactClin('add', '1')">1</button>
-                    <button class="btn bcalc numb" data-val="2" onclick="window.CalcManager.interactClin('add', '2')">2</button>
-                    <button class="btn bcalc numb" data-val="3" onclick="window.CalcManager.interactClin('add', '3')">3</button>
-                    <button class="btn bcalc oper" data-val="+" onclick="window.CalcManager.interactClin('add', '+')">+</button>
-                    <button class="btn bcalc gray" data-val="more" onclick="window.CalcManager.sheetSet(10, 'mid')">«</button>
-                    <button class="btn bcalc numb" data-val="0" onclick="window.CalcManager.interactClin('add', '0')">0</button>
-                    <button class="btn bcalc numb" data-val="." onclick="window.CalcManager.interactClin('add', '.')">.</button>
+                    <button class="btn bcalc oper" data-val="+or-"   onclick="window.CalcManager.interactClin('add', '-')">+/-</button>
+                    <button class="btn bcalc oper" data-val="/"      onclick="window.CalcManager.interactClin('add', '/')">/</button>
+                    <button class="btn bcalc numb" data-val="7"      onclick="window.CalcManager.interactClin('add', '7')">7</button>
+                    <button class="btn bcalc numb" data-val="8"      onclick="window.CalcManager.interactClin('add', '8')">8</button>
+                    <button class="btn bcalc numb" data-val="9"      onclick="window.CalcManager.interactClin('add', '9')">9</button>
+                    <button class="btn bcalc oper" data-val="*"      onclick="window.CalcManager.interactClin('add', '*')">*</button>
+                    <button class="btn bcalc numb" data-val="4"      onclick="window.CalcManager.interactClin('add', '4')">4</button>
+                    <button class="btn bcalc numb" data-val="5"      onclick="window.CalcManager.interactClin('add', '5')">5</button>
+                    <button class="btn bcalc numb" data-val="6"      onclick="window.CalcManager.interactClin('add', '6')">6</button>
+                    <button class="btn bcalc oper" data-val="-"      onclick="window.CalcManager.interactClin('add', '-')">-</button>
+                    <button class="btn bcalc numb" data-val="1"      onclick="window.CalcManager.interactClin('add', '1')">1</button>
+                    <button class="btn bcalc numb" data-val="2"      onclick="window.CalcManager.interactClin('add', '2')">2</button>
+                    <button class="btn bcalc numb" data-val="3"      onclick="window.CalcManager.interactClin('add', '3')">3</button>
+                    <button class="btn bcalc oper" data-val="+"      onclick="window.CalcManager.interactClin('add', '+')">+</button>
+                    <button class="btn bcalc gray" data-val="more"   onclick="window.CalcManager.sheetSet(10, 'mid')">«</button>
+                    <button class="btn bcalc numb" data-val="0"      onclick="window.CalcManager.interactClin('add', '0')">0</button>
+                    <button class="btn bcalc numb" data-val="."      onclick="window.CalcManager.interactClin('add', '.')">.</button>
                     <button class="btn bcalc func" data-val="result" onclick="window.CalcManager.interactClin('result', 'click')">=</button>
                 </div>
             </div>
+
+            <!-- ═══════════════ TOOLS / CONVERTERS LIST ═══════════════ -->
             <div class="page pconvs" id="pconvs">
                 <div class="fantikconv">
                     <div class="convcat" id="converters">
@@ -207,7 +199,7 @@
                                 <img src="img/convs/размер_обуви.svg" />
                                 <p class="convnamelist">Размер обуви</p>
                             </div>
-                            <div class="converter">
+                            <div class="converter" onclick="window.PagesManager.pageSwitch('currency')">
                                 <img src="img/convs/валюты.svg" />
                                 <p class="convnamelist">Валюты</p>
                             </div>
@@ -249,6 +241,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ═══════════════ ABOUT ═══════════════ -->
             <div class="page pabt" id="pabt">
                 <div class="abtcont">
                     <div id="abtup">
@@ -262,43 +256,53 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ═══════════════ LENGTH CONVERTER ═══════════════ -->
             <div class="page pconv active" id="pconv">
                 <div class="fantikconv" style="overflow-y: hidden;">
                     <h1 style="margin: 0;">Длина</h1>
-                    <div id="convplaces" class="places">
-
-                    </div>
+                    <div id="convplaces" class="places"></div>
                     <button id="addPlace" class="place" onclick="convPlaceNew()">+</button>
                     <div class="convdown">
-                        <div class="cdElement  buttonsplace min dec" id="buttonsplaceConv" style="width: 100%; padding: 0; grid-template-columns: repeat(3, 1fr);"></div>
+                        <div class="cdElement buttonsplace min dec" id="buttonsplaceConv" style="width: 100%; padding: 0; grid-template-columns: repeat(3, 1fr);"></div>
                         <div class="cdElement active convVars" id="convVars" style="flex: 1">
-                            <table class="convVarsTable">
-                                <thead></thead>
-                                <tbody id="convChoseValues">
-                                    <tr onclick="convSetThis('пм')"><td>пиктометр</td><td>пм</td><td>0.000 000 000 001</td></tr>
-                                    <tr onclick="convSetThis('нм')"><td>нанометр</td><td>нм</td><td>0.000 000 001</td></tr>
-                                    <tr onclick="convSetThis('мкм')"><td>микрометр</td><td>мкм</td><td>0.000 001</td></tr>
-                                    <tr onclick="convSetThis('мм')"><td>милиметр</td><td>мм</td><td>0.001</td></tr>
-                                    <tr onclick="convSetThis('см')"><td>сантиметр</td><td>см</td><td>0.01</td></tr>
-                                    <tr onclick="convSetThis('дм')"><td>дециметр</td><td>дм</td><td>0.1</td></tr>
-                                    <tr onclick="convSetThis('м')"><td>метр</td><td>м</td><td>1</td></tr>
-                                    <tr onclick="convSetThis('км')"><td>киллометр</td><td>км</td><td>1 000</td></tr>
-                                    <tr><td>дюйм</td><td>in</td><td>0.025 4</td></tr>
-                                    <tr><td>фут</td><td>ft</td><td>0.304 8</td></tr>
-                                    <tr><td>ярд</td><td>yd</td><td>0.914 4</td></tr>
-                                    <tr><td>миля</td><td>mi</td><td>1 609.34</td></tr>
-                                    <tr><td>морская миля</td><td>nmi</td><td>1 852</td></tr>
-                                </tbody>
-                            </table>
+                            <div class="convVarsList" id="convChoseValues"></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- ═══════════════ CURRENCY CONVERTER ═══════════════ -->
+            <!--
+                Структура полностью зеркалирует #pconv:
+                  places       → #currencyPlaces
+                  + button     → #addCurrencyPlace
+                  unitsList    → #currencyChoseValues
+                Логика — в currencyConverterUI.js
+            -->
+            <div class="page pcurrency" id="pcurrency">
+                <div class="fantikconv" style="overflow-y: hidden;">
+                    <h1 style="margin: 0;">Валюты</h1>
+                    <div id="currencyPlaces" class="places"></div>
+                    <button id="addPlace" class="place" onclick="currencyPlaceNew()">+</button>
+                    <div class="convdown">
+                        <!-- Клавиатура (та же, что у конвертера длины) -->
+                        <div class="cdElement buttonsplace min dec" id="buttonsplaceCurrency"
+                             style="width: 100%; padding: 0; grid-template-columns: repeat(3, 1fr);"></div>
+                        <!-- Список валют по категориям -->
+                        <div class="cdElement active convVars" id="currencyVars" style="flex: 1">
+                            <div class="convVarsList" id="currencyChoseValues"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /pageplace -->
+
         <div class="down">
-            <button onclick="window.PagesManager.pageSwitch('calc')" class="btn bdown active" id="calc-btn">Calculator</button>
-            <button onclick="window.PagesManager.pageSwitch('convs')" class="btn bdown" id="convs-btn">Converter</button>
-            <button onclick="window.PagesManager.pageSwitch('abt')" class="btn bdown" id="abt-btn">About</button>
+            <button onclick="window.PagesManager.pageSwitch('calc')"     class="btn bdown active" id="calc-btn">Calculator</button>
+            <button onclick="window.PagesManager.pageSwitch('convs')"    class="btn bdown"        id="convs-btn">Tools</button>
+            <button onclick="window.PagesManager.pageSwitch('abt')"      class="btn bdown"        id="abt-btn">About</button>
         </div>
     </div>
 </body>

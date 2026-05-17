@@ -106,12 +106,6 @@ img {
 .cdElement {
 }
 
-.convVarsTable {
-    background-color: #2a2a2a;
-    border-radius: 8px;
-    width: 100%;
-}
-
 .convVars {
     max-height: calc(100dvh - 4rem - 2vh - 40px - 35vh - 32px);
     overflow-y: auto;
@@ -161,45 +155,120 @@ img {
 
 #convChoseValues {
     cursor: pointer;
-    background-color: var(--bg2);
+    /*background-color: var(--bg2);*/
     border-radius: var(--br);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
 
-    tr {
-        border: none;
-        transition: background var(--tr);
-
-        td {
-            padding: 0;
-            border: none;
-        }
-
-        &:hover {
-            background-color: var(--color-btn-hover);
-        }
-    }
+.convVarsList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 
 .unitStringDelete {
-    text-align: center;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.unitStringDelete button {
+    width: 100%;
+    padding: 12px 16px;
+    background-color: #c41c3b;
+    color: white;
+    border: none;
+    border-radius: var(--br);
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85em;
+    transition: background var(--tr);
+}
+
+.unitStringDelete button:hover {
+    background-color: #a01729;
 }
 
 /* Группировка единиц по категориям */
-#convChoseValues tr.unitCategoryHeader {
+.unitCategoryHeader {
+    width: 100%;
+    padding: 0;
+}
+
+.unitCategoryHeader button {
+    width: 100%;
     background: linear-gradient(135deg, #1d2443 0%, #2b1b3a 100%);
     color: white;
     font-weight: 600;
     text-transform: uppercase;
     font-size: 0.85em;
     letter-spacing: 0.5px;
-}
-
-#convChoseValues tr.unitRow td:first-child {
-    padding-left: 16px;
-}
-
-#convChoseValues tr.unitRow:hover td {
-    background: var(--bg3);
+    border: none;
+    border-radius: var(--br);
+    padding: 12px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     transition: background var(--tr);
+}
+
+.unitCategoryHeader button:hover {
+    background: linear-gradient(135deg, #2a3560 0%, #3a2a4a 100%);
+}
+
+.unitRow {
+    width: 100%;
+    padding: 0;
+}
+
+.unitRow.collapsed {
+    display: none;
+}
+
+.unitRow button {
+    width: 100%;
+    padding: 8px 16px;
+    background-color: var(--bg3);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    transition: background var(--tr);
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.unitRow button:hover {
+    background-color: var(--color-btn-hover);
+}
+
+.unitButton {
+    display: flex !important;
+    gap: 12px;
+}
+
+.unit-name {
+    flex: 1;
+    font-weight: 500;
+}
+
+.unit-text {
+    min-width: 60px;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.unit-value {
+    min-width: 100px;
+    text-align: right;
+    opacity: 0.7;
+    font-size: 0.85em;
 }
 
 /* Кнопка выбора единицы */
@@ -213,14 +282,21 @@ img {
     .place {
         flex-wrap: wrap;
     }
-    .unit-btn {
-        width: 100%;
-        border-radius: 8px 8px 0 0 !important;
-        margin-bottom: 4px;
+    
+    .unitRow button {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
     }
-    #convChoseValues td {
-        font-size: 13px;
-        padding: 6px 8px;
+    
+    .unit-text {
+        min-width: auto;
+        text-align: left;
+    }
+    
+    .unit-value {
+        min-width: auto;
+        text-align: left;
     }
 }
 
@@ -249,6 +325,7 @@ img {
 
 #addPlace {
     width: 100%;
+    min-height: 40px;
     background-color: var(--color-btn);
     border: 0;
     height: 40px;

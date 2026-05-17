@@ -187,16 +187,16 @@ class CalcManager {
     }
 
     sheetSet(system, size) {
-        if (size === undefined) {
-            if (this.size === undefined) {
+        if (!size) {
+            if (!this.size) {
                 size = 'min';
             } else {
                 size = this.size
             }
         }
-        if (system === undefined) {
-            if (this.system === undefined) {
-                system = 'dec';
+        if (!system) {
+            if (!this.system) {
+                system = 10;
             } else {
                 system = this.system
             }

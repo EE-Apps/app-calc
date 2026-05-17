@@ -25,6 +25,9 @@ a {
     height: calc(100dvh - var(--ds2));
     width: calc(100dvw - var(--ds2));
     overflow: hidden;
+	
+	/*width: 100dvw;
+	height: 100dvh;*/
 }
 
 .btn.bdown {
@@ -42,6 +45,7 @@ a {
     align-items: center;
     flex-wrap: nowrap;
     justify-content: space-evenly;
+	padding-bottom: 1rem;
 }
 
 .circle {
