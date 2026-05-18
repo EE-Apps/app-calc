@@ -1,0 +1,4 @@
+
+/app/tauri/node_modules/.bin
+/app/tauri/src
+/dist

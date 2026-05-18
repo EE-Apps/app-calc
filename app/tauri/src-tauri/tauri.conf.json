@@ -1,0 +1,40 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Calculator",
+  "version": "0.1.0",
+  "identifier": "com.eenot.calc",
+  "build": {
+    "frontendDist": "../../../dist",
+    "beforeBuildCommand": "rm -rf $HOME/GitHub/Apps/calc/dist && mkdir -p $HOME/GitHub/Apps/calc/dist && cp -rf $HOME/GitHub/Apps/calc/index.html $HOME/GitHub/Apps/calc/icon.png $HOME/GitHub/Apps/calc/icon.svg $HOME/GitHub/Apps/calc/js $HOME/GitHub/Apps/calc/img $HOME/GitHub/Apps/calc/fonts $HOME/GitHub/Apps/calc/css $HOME/GitHub/Apps/calc/dist/ || true",
+    "beforeDevCommand": "echo 'Dev mode'"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "Calculator",
+        "width": 400,
+        "height": 800
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["appimage", "deb", "nsis"],
+    "icon": [
+      "icons/icon.png",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": "",
+      "wix": {
+        "language": ["en-US", "ru-RU"]
+      }
+    }
+  }
+}

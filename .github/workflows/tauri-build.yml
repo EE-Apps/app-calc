@@ -1,0 +1,149 @@
+name: 'Tauri Build & Release'
+
+on:
+  push:
+    tags:
+      - 'v*'  # запуск при создании тега вида v1.0.0
+  workflow_dispatch:  # ручной запуск из UI
+
+jobs:
+  build-tauri:
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Windows
+          - platform: 'windows-latest'
+            args: ''
+            targets: 'nsis'
+            
+          # Ubuntu (AppImage + deb)
+          - platform: 'ubuntu-22.04'
+            args: ''
+            targets: 'appimage,deb'
+            
+          # Arch Linux: собираем AppImage (универсальный формат)
+          # Нативный pacman-пакет требует отдельного PKGBUILD и AUR
+          - platform: 'archlinux-latest'
+            args: ''
+            targets: 'appimage'
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # ─────────────────────────────────────────────────────
+      # Установка системных зависимостей (только Linux)
+      # ─────────────────────────────────────────────────────
+      - name: Install Linux dependencies (Ubuntu)
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt update
+          sudo apt install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            desktop-file-utils \
+            fuse
+
+      - name: Install Linux dependencies (Arch)
+        if: matrix.platform == 'archlinux-latest'
+        run: |
+          sudo pacman -Syu --noconfirm \
+            webkit2gtk-4.1 \
+            base-devel \
+            curl \
+            wget \
+            file \
+            libxdo \
+            openssl \
+            libappindicator-gtk3 \
+            librsvg \
+            patchelf \
+            desktop-file-utils \
+            fuse2
+
+      # ─────────────────────────────────────────────────────
+      # Node.js + кэш зависимостей
+      # ─────────────────────────────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'pnpm'  # замените на npm/yarn если нужно
+
+      # ─────────────────────────────────────────────────────
+      # Rust + кэш компиляции
+      # ─────────────────────────────────────────────────────
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: 'app/tauri/src-tauri -> target'
+
+      # ─────────────────────────────────────────────────────
+      # Установка зависимостей фронтенда (в корне репо)
+      # ─────────────────────────────────────────────────────
+      - name: Install frontend dependencies
+        run: pnpm install  # выполнится в корне, где лежит package.json
+
+      # ─────────────────────────────────────────────────────
+      # Сборка Tauri с указанием пути к проекту
+      # ─────────────────────────────────────────────────────
+      - name: Build Tauri app
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          # 🔑 КЛЮЧЕВОЙ ПАРАМЕТР: путь к Tauri внутри монорепозитория
+          projectPath: 'app/tauri'
+          
+          # Ограничиваем целевые форматы для каждой платформы
+          args: ${{ matrix.args }} --bundles ${{ matrix.targets }}
+          
+          # Настройки релиза
+          tagName: app-v__VERSION__
+          releaseName: 'Calculator v__VERSION__'
+          releaseBody: |
+            ## 📦 Calculator v__VERSION__
+            
+            Автоматически собранные бинарники для всех платформ.
+            
+            ### 🪟 Windows
+            - `Calculator_*_x64-setup.exe` — установщик (рекомендуется)
+            
+            ### 🐧 Linux
+            - `Calculator_*_amd64.deb` — для Debian/Ubuntu/Mint
+            - `Calculator_*.AppImage` — универсальный формат (работает на Arch тоже!)
+            
+            > 💡 На Arch Linux: установите зависимости  
+            > `sudo pacman -S webkit2gtk-4.1 libappindicator-gtk3`
+          releaseDraft: true
+          prerelease: false
+          
+          # Дополнительные флаги для обхода проблем с linuxdeploy
+          # (особенно актуально для Arch)
+          uploadUpdaterJson: true
+
+      # ─────────────────────────────────────────────────────
+      # (Опционально) Загрузка артефактов как workflow artifacts
+      # ─────────────────────────────────────────────────────
+      - name: Upload workflow artifacts
+        if: false  # включите, если нужно скачивать билды без релиза
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.platform }}-builds
+          path: app/tauri/src-tauri/target/release/bundle/

@@ -52,6 +52,9 @@
         scale: 1;
         margin: 0;
         padding: 0;
+        width: 100dvw;
+        height: calc(100dvh - 1rem);
+        padding-bottom: 1rem;
     }
 
     .buttonsplace {
